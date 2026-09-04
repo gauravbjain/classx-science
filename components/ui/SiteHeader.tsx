@@ -1,24 +1,47 @@
+"use client";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { LIVE_SUBJECTS } from "@/content";
 import ThemeToggle from "./ThemeToggle";
 
 export default function SiteHeader() {
+  const path = usePathname() ?? "/";
+  const seg = path.split("/")[1] ?? "";
+  const current = LIVE_SUBJECTS.find((s) => s.slug === seg);
+  const multi = LIVE_SUBJECTS.length > 1;
+
   return (
-    <header className="no-print sticky top-0 z-40 border-b hairline backdrop-blur-xl bg-[var(--bg)]">
+    <header className="no-print sticky top-0 z-40 border-b hairline bg-[var(--bg)]">
       <div className="mx-auto flex max-w-6xl items-center gap-3 px-5 py-3">
-        <Link href="/" className="flex items-center gap-2.5 font-semibold tracking-tight">
-          <span className="grid h-8 w-8 place-items-center rounded-lg bg-[var(--accent)] text-white text-[13px] font-bold">
-            X
-          </span>
+        <Link href="/" className="flex shrink-0 items-center gap-2.5 font-semibold tracking-tight">
+          <span className="grid h-8 w-8 place-items-center rounded-lg text-[13px] font-bold text-white"
+            style={{ background: current?.accent ?? "var(--accent)" }}>X</span>
           <span className="text-[15px]">ClassX</span>
         </Link>
-        <span className="hidden sm:inline text-[13px] faint">Science · CBSE 2026-27</span>
-        <div className="ml-auto flex items-center gap-2">
-          <Link
-            href="/revise"
-            className="rounded-full border hairline px-3 py-1.5 text-[13px] font-medium transition hover:bg-[var(--surface-2)]"
-          >
-            Revise
-          </Link>
+
+        {multi ? (
+          <nav className="flex min-w-0 gap-1 overflow-x-auto no-scrollbar">
+            {LIVE_SUBJECTS.map((s) => (
+              <Link key={s.slug} href={`/${s.slug}`}
+                className={`shrink-0 rounded-full px-2.5 py-1 text-[13px] font-medium transition ${
+                  current?.slug === s.slug ? "bg-[var(--surface-2)]" : "faint hover:bg-[var(--surface-2)]"}`}>
+                {s.name}
+              </Link>
+            ))}
+          </nav>
+        ) : (
+          <span className="hidden truncate text-[13px] faint sm:inline">
+            {current ? `${current.name} · ${current.board} ${current.session}` : "CBSE Class X"}
+          </span>
+        )}
+
+        <div className="ml-auto flex shrink-0 items-center gap-2">
+          {current && (
+            <Link href={`/${current.slug}/revise`}
+              className="rounded-full border hairline px-3 py-1.5 text-[13px] font-medium transition hover:bg-[var(--surface-2)]">
+              Revise
+            </Link>
+          )}
           <ThemeToggle />
         </div>
       </div>

@@ -3,7 +3,7 @@ import { useMemo, useState } from "react";
 import type { Quiz as Q } from "@/lib/types";
 import { recordQuiz } from "@/lib/progress";
 
-export default function Quiz({ items, slug }: { items: Q[]; slug: string }) {
+export default function Quiz({ items, subject, slug }: { items: Q[]; subject: string; slug: string }) {
   const [i, setI] = useState(0);
   const [picked, setPicked] = useState<number | null>(null);
   const [score, setScore] = useState(0);
@@ -21,7 +21,7 @@ export default function Quiz({ items, slug }: { items: Q[]; slug: string }) {
   function next() {
     if (i + 1 >= items.length) {
       setDone(true);
-      recordQuiz(slug, score + (correct ? 0 : 0), items.length);
+      recordQuiz(subject, slug, score, items.length);
       return;
     }
     setI(i + 1); setPicked(null);

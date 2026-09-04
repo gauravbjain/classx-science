@@ -1,8 +1,8 @@
 "use client";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import type { Chapter } from "@/lib/types";
-import { UNITS } from "@/lib/units";
+import type { Chapter, UnitMeta } from "@/lib/types";
+import { tint } from "@/lib/palette";
 import { BlockList, slugify } from "./Blocks";
 import Quiz from "./Quiz";
 import Flashcards from "./Flashcards";
@@ -11,22 +11,32 @@ import { markRead } from "@/lib/progress";
 type Tab = "learn" | "cards" | "quiz";
 
 export default function ChapterView({
-  ch, prev, next,
-}: { ch: Chapter; prev?: { slug: string; title: string; num: number }; next?: { slug: string; title: string; num: number } }) {
+  ch, subjectSlug, subjectName, unit, prev, next,
+}: {
+  ch: Chapter;
+  subjectSlug: string;
+  subjectName: string;
+  unit?: UnitMeta;
+  prev?: { slug: string; title: string; num: number };
+  next?: { slug: string; title: string; num: number };
+}) {
   const [tab, setTab] = useState<Tab>("learn");
-  const u = UNITS[ch.unit];
+  const hue = unit?.hue ?? "var(--accent)";
   const toc = ch.blocks.filter((b) => b.t === "h").map((b) => (b as { text: string }).text);
 
-  useEffect(() => { markRead(ch.slug); }, [ch.slug]);
+  useEffect(() => { markRead(subjectSlug, ch.slug); }, [subjectSlug, ch.slug]);
   useEffect(() => { window.scrollTo({ top: 0 }); }, [tab]);
 
   return (
     <>
       <header className="mx-auto max-w-3xl px-5 pt-8 sm:pt-12">
-        <Link href="/" className="text-[13px] faint transition hover:text-[var(--ink)]">← All chapters</Link>
+        <Link href={`/${subjectSlug}`} className="text-[13px] faint transition hover:text-[var(--ink)]">
+          ← All {subjectName} chapters
+        </Link>
         <div className="mt-4 flex flex-wrap items-center gap-2">
-          <span className={`rounded-full px-2.5 py-1 text-[11px] font-semibold ${u.tint} ${u.text}`}>
-            Chapter {ch.num} · {u.short}
+          <span className="rounded-full px-2.5 py-1 text-[11px] font-semibold"
+            style={{ background: tint(hue, 14), color: hue }}>
+            Chapter {ch.num}{unit ? ` · ${unit.short}` : ""}
           </span>
           <span className="rounded-full border hairline px-2.5 py-1 text-[11px] font-medium faint">{ch.minutes} min read</span>
           {ch.formative && (
@@ -123,26 +133,26 @@ export default function ChapterView({
 
       {tab === "cards" && (
         <div className="mt-8 fade-up">
-          <Flashcards cards={ch.flashcards} slug={ch.slug} />
+          <Flashcards cards={ch.flashcards} />
         </div>
       )}
 
       {tab === "quiz" && (
         <div className="mt-8 fade-up">
-          <Quiz items={ch.quiz} slug={ch.slug} />
+          <Quiz items={ch.quiz} subject={subjectSlug} slug={ch.slug} />
         </div>
       )}
 
       {/* pager */}
       <nav className="no-print mt-16 grid gap-3 border-t hairline pt-6 sm:grid-cols-2">
         {prev ? (
-          <Link href={`/chapters/${prev.slug}`} className="rounded-xl border hairline p-4 transition hover:bg-[var(--surface-2)]">
+          <Link href={`/${subjectSlug}/${prev.slug}`} className="rounded-xl border hairline p-4 transition hover:bg-[var(--surface-2)]">
             <div className="text-[11px] faint">← Previous · Chapter {prev.num}</div>
             <div className="mt-0.5 text-[0.95rem] font-medium">{prev.title}</div>
           </Link>
         ) : <div />}
         {next && (
-          <Link href={`/chapters/${next.slug}`} className="rounded-xl border hairline p-4 text-right transition hover:bg-[var(--surface-2)]">
+          <Link href={`/${subjectSlug}/${next.slug}`} className="rounded-xl border hairline p-4 text-right transition hover:bg-[var(--surface-2)]">
             <div className="text-[11px] faint">Next · Chapter {next.num} →</div>
             <div className="mt-0.5 text-[0.95rem] font-medium">{next.title}</div>
           </Link>

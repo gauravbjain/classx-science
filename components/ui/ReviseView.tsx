@@ -1,13 +1,13 @@
 "use client";
 import { useMemo, useState } from "react";
-import type { Chapter } from "@/lib/types";
-import { UNITS } from "@/lib/units";
+import type { Subject } from "@/lib/types";
 import Quiz from "./Quiz";
 import Flashcards from "./Flashcards";
 
 type Tab = "formulas" | "cards" | "test";
 
-export default function ReviseView({ chapters }: { chapters: Chapter[] }) {
+export default function ReviseView({ subject }: { subject: Subject }) {
+  const chapters = subject.chapters;
   const [tab, setTab] = useState<Tab>("formulas");
   const [chSlug, setChSlug] = useState(chapters[0].slug);
   const [seed, setSeed] = useState(0);
@@ -23,7 +23,9 @@ export default function ReviseView({ chapters }: { chapters: Chapter[] }) {
   return (
     <>
       <header className="mx-auto max-w-3xl px-5 pt-10">
-        <h1 className="text-[2rem] font-semibold tracking-tight sm:text-[2.5rem]">Revise</h1>
+        <h1 className="text-[2rem] font-semibold tracking-tight sm:text-[2.5rem]">
+          Revise {subject.name}
+        </h1>
         <p className="mt-2 font-serif text-[1.1rem] muted">
           The night before the paper, this is the page to be on.
         </p>
@@ -45,7 +47,7 @@ export default function ReviseView({ chapters }: { chapters: Chapter[] }) {
           {chapters.filter((c) => c.formulas?.length).map((c) => (
             <section key={c.slug}>
               <div className="flex items-baseline gap-2">
-                <span className="font-mono text-[12px] font-bold" style={{ color: UNITS[c.unit].hue }}>{String(c.num).padStart(2, "0")}</span>
+                <span className="font-mono text-[12px] font-bold" style={{ color: subject.units[c.unit]?.hue ?? subject.accent }}>{String(c.num).padStart(2, "0")}</span>
                 <h2 className="text-[1.05rem] font-semibold">{c.title}</h2>
               </div>
               <div className="mt-3 space-y-2">
@@ -75,12 +77,12 @@ export default function ReviseView({ chapters }: { chapters: Chapter[] }) {
       {tab === "test" && (
         <div className="mt-8 fade-up">
           <div className="mb-4 flex items-center justify-between">
-            <p className="text-[0.9rem] muted">25 questions pulled at random from the whole syllabus.</p>
+            <p className="text-[0.9rem] muted">{`Twenty-five questions pulled at random from the whole ${subject.name} syllabus.`}</p>
             <button onClick={() => setSeed((s) => s + 1)} className="rounded-full border hairline px-3.5 py-1.5 text-[12px] font-medium transition hover:bg-[var(--surface-2)]">
               New set
             </button>
           </div>
-          <Quiz key={seed} items={mixed} slug="__mixed" />
+          <Quiz key={seed} items={mixed} subject={subject.slug} slug="__mixed" />
         </div>
       )}
       </div>

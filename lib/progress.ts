@@ -1,14 +1,15 @@
 "use client";
 
-const KEY = "classx.progress.v1";
+const KEY = "classx.progress.v2";
 
 export type Progress = {
-  read: Record<string, number>;          // chapter slug -> timestamp
+  read: Record<string, number>;                                   // "subject/slug" -> timestamp
   quiz: Record<string, { best: number; total: number; at: number }>;
-  cards: Record<string, string[]>;       // chapter slug -> mastered card indices
+  cards: Record<string, string[]>;
 };
 
 const EMPTY: Progress = { read: {}, quiz: {}, cards: {} };
+const key = (subject: string, slug: string) => `${subject}/${slug}`;
 
 export function load(): Progress {
   if (typeof window === "undefined") return EMPTY;
@@ -22,7 +23,7 @@ export function load(): Progress {
   }
 }
 
-export function save(p: Progress) {
+function save(p: Progress) {
   try {
     window.localStorage.setItem(KEY, JSON.stringify(p));
     window.dispatchEvent(new Event("classx-progress"));
@@ -31,31 +32,37 @@ export function save(p: Progress) {
   }
 }
 
-export function markRead(slug: string) {
+export function markRead(subject: string, slug: string) {
   const p = load();
-  p.read[slug] = Date.now();
+  p.read[key(subject, slug)] = Date.now();
   save(p);
 }
 
-export function recordQuiz(slug: string, score: number, total: number) {
+export function recordQuiz(subject: string, slug: string, score: number, total: number) {
   const p = load();
-  const prev = p.quiz[slug];
-  p.quiz[slug] = { best: Math.max(score, prev?.best ?? 0), total, at: Date.now() };
+  const k = key(subject, slug);
+  const prev = p.quiz[k];
+  p.quiz[k] = { best: Math.max(score, prev?.best ?? 0), total, at: Date.now() };
   save(p);
 }
 
-export function toggleCard(slug: string, idx: number) {
+/** Stats scoped to one subject. */
+export function subjectStats(subject: string) {
   const p = load();
-  const list = new Set(p.cards[slug] ?? []);
-  const k = String(idx);
-  if (list.has(k)) list.delete(k); else list.add(k);
-  p.cards[slug] = Array.from(list);
-  save(p);
+  const pre = `${subject}/`;
+  const read = Object.keys(p.read).filter((k) => k.startsWith(pre)).length;
+  const quizzes = Object.entries(p.quiz).filter(([k]) => k.startsWith(pre)).map(([, v]) => v);
+  const avg = quizzes.length
+    ? Math.round((quizzes.reduce((a, b) => a + b.best / b.total, 0) / quizzes.length) * 100)
+    : 0;
+  return { read, quizzes: quizzes.length, avg };
 }
 
-export function resetAll() {
-  try {
-    window.localStorage.removeItem(KEY);
-    window.dispatchEvent(new Event("classx-progress"));
-  } catch { /* ignore */ }
+export function resetSubject(subject: string) {
+  const p = load();
+  const pre = `${subject}/`;
+  for (const k of Object.keys(p.read)) if (k.startsWith(pre)) delete p.read[k];
+  for (const k of Object.keys(p.quiz)) if (k.startsWith(pre)) delete p.quiz[k];
+  for (const k of Object.keys(p.cards)) if (k.startsWith(pre)) delete p.cards[k];
+  save(p);
 }

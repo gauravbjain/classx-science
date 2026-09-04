@@ -2,7 +2,7 @@
 import { useState } from "react";
 import type { Flashcard } from "@/lib/types";
 
-export default function Flashcards({ cards }: { cards: Flashcard[]; slug?: string }) {
+export default function Flashcards({ cards }: { cards: Flashcard[] }) {
   const [i, setI] = useState(0);
   const [flipped, setFlipped] = useState(false);
   const [known, setKnown] = useState<Set<number>>(new Set());

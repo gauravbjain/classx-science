@@ -1,12 +1,14 @@
 "use client";
 import React from "react";
+import type { SimId } from "@/lib/sim-ids";
 import { MirrorRay, LensRay, RefractionSlab, EyeDefects, PrismDispersion, Scattering } from "./optics";
 import { OhmsLaw, SeriesParallel, PowerBill, MagneticField, FlemingLHR, DomesticCircuit } from "./electricity";
 import { EquationBalancer, PhScale, ReactivitySeries, HomologousBuilder, PeriodicTable } from "./chemistry";
 import { HeartCirculation, ReflexArc, PunnettSquare, DigestionJourney, PlantTropism, NephronFilter, FlowerAnatomy, NaturalSelection } from "./biology";
 import { FoodChain, WasteSorter, OzoneShield } from "./environment";
 
-const REGISTRY: Record<string, React.ComponentType> = {
+/** TypeScript enforces that this covers exactly the ids in lib/sim-ids.ts. */
+const REGISTRY: Record<SimId, React.ComponentType> = {
   "mirror-ray": MirrorRay,
   "lens-ray": LensRay,
   "refraction-slab": RefractionSlab,
@@ -37,9 +39,7 @@ const REGISTRY: Record<string, React.ComponentType> = {
   "ozone-shield": OzoneShield,
 };
 
-export const SIM_IDS = Object.keys(REGISTRY);
-
-export default function Sim({ id }: { id: string; title?: string; caption?: string }) {
+export default function Sim({ id }: { id: SimId; title?: string; caption?: string }) {
   const C = REGISTRY[id];
   if (!C) return null;
   return <C />;

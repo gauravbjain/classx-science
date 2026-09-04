@@ -1,13 +1,17 @@
-# ClassX — Science
+# ClassX
 
-An interactive learning site for **CBSE Class X Science, session 2026-27**. Built to be read on a
-phone or a laptop, with a simulation you can actually play with in every chapter.
+An interactive learning site for **CBSE Class X**, session 2026-27. Built to be read on a phone or a
+laptop, with a simulation you can actually play with in every chapter.
 
-- 15 chapters, mapped line-by-line to the official CBSE Secondary Curriculum for Science (2026-27)
+Science is live. The site is multi-subject from day one — adding Maths or Social Science later is a
+content change, not a refactor, and it moves no existing URL. See
+[docs/ADDING-A-SUBJECT.md](docs/ADDING-A-SUBJECT.md).
+
+- 15 Science chapters, mapped line-by-line to the official CBSE Secondary Curriculum (2026-27)
 - 28 interactive simulations (ray diagrams, circuits, Punnett squares, pH scale, food chains…)
 - 176 practice MCQs with explanations, and ~200 flashcards
-- A `/revise` page with the full formula sheet, all flashcards, and a 25-question mixed test
-- Progress tracking saved in the browser — nothing leaves the device
+- A per-subject `/revise` page: full formula sheet, all flashcards, and a 25-question mixed test
+- Progress tracking saved in the browser, namespaced per subject — nothing leaves the device
 - Light and dark mode, fully responsive
 
 ---
@@ -64,21 +68,40 @@ full-screen like an app.
 
 ---
 
+## URLs
+
+Fixed from the first deploy, so nothing your nephew bookmarks ever moves:
+
+```
+/                        the library — every subject
+/science                 subject home: chapter grid, marks split, progress
+/science/electricity     a chapter
+/science/revise          formula sheet · flashcards · mixed test
+/mathematics/…           the same three shapes for every future subject
+```
+
+Do not rename a `slug` once it is published. Titles can change freely.
+
 ## How it is put together
 
 ```
 app/
-  layout.tsx                 root layout, theme script, fonts
-  page.tsx                   subject home — chapter grid, marks split
-  chapters/[slug]/page.tsx   one chapter (statically generated)
-  revise/page.tsx            formula sheet, all flashcards, mixed test
+  layout.tsx                    root layout, theme script, fonts
+  page.tsx                      the library — lists every subject
+  [subject]/page.tsx            subject home (statically generated)
+  [subject]/[slug]/page.tsx     one chapter
+  [subject]/revise/page.tsx     revise
 components/
-  ui/       Blocks.tsx (content renderer), Quiz, Flashcards, ChapterView, ReviseView
+  ui/       Blocks.tsx (content renderer), Quiz, Flashcards, ChapterView, ReviseView, SiteHeader
   sims/     optics · electricity · chemistry · biology · environment + registry.tsx
 content/
-  science/  ch01.ts … ch15.ts, index.ts
+  index.ts        THE SUBJECT REGISTRY — one array; adding a subject is one line
+  _template/      copy this folder to start a new subject
+  science/        units.ts, ch01.ts … ch15.ts, index.ts
+docs/
+  ADDING-A-SUBJECT.md
 lib/
-  types.ts  units.ts  progress.ts
+  types.ts  sim-ids.ts  palette.ts  progress.ts  validate.ts
 ```
 
 ### The content model
@@ -103,20 +126,26 @@ Plus `formulas`, `examFocus`, `flashcards` and `quiz` arrays per chapter.
 
 ### Adding a simulation
 
-1. Write the component in the right file under `components/sims/` (they use plain SVG + hooks,
-   no chart libraries), wrapping it in `<SimFrame>`.
-2. Export it, then add it to `REGISTRY` in `components/sims/registry.tsx` with an id.
-3. Reference it from any chapter: `{ t: "sim", id: "your-id" }`.
+1. Write the component under `components/sims/` (plain SVG + hooks, no chart library), wrapped in
+   `<SimFrame>`.
+2. Add its id to `SIM_IDS` in `lib/sim-ids.ts`.
+3. Add it to `REGISTRY` in `components/sims/registry.tsx`.
+4. Use it from any chapter: `{ t: "sim", id: "your-id" }`.
+
+TypeScript keeps steps 2 and 3 in sync and rejects a `sim` block naming an id that does not exist.
 
 ### Adding another subject
 
-Everything is already keyed by subject.
+Copy `content/_template/` to `content/<slug>/`, write the units and chapters, and add one line to
+the array in `content/index.ts`. Routes, navigation, the marks bar and progress tracking all follow
+from that array. Full walkthrough — including how to ship a half-finished subject — is in
+[docs/ADDING-A-SUBJECT.md](docs/ADDING-A-SUBJECT.md).
 
-1. Create `content/maths/ch01.ts …` following the same `Chapter` type.
-2. Export a `Subject` from `content/maths/index.ts` and add it to `SUBJECTS`.
-3. Add unit keys and colours for the new subject in `lib/units.ts`.
-4. Either move the routes under `app/[subject]/…`, or copy `app/page.tsx` to `app/maths/page.tsx`
-   — the chapter route and every component already take the subject's data as a prop.
+### What the build checks
+
+`lib/validate.ts` runs at build time and fails the build, naming the chapter, on a duplicate slug, a
+unit key that is not defined, a quiz `answer` index out of range, a question with no explanation, or
+an empty chapter. A content mistake becomes a red build on Vercel rather than a broken page.
 
 ---
 
