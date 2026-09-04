@@ -3,13 +3,16 @@
 An interactive learning site for **CBSE Class X**, session 2026-27. Built to be read on a phone or a
 laptop, with a simulation you can actually play with in every chapter.
 
-Science is live. The site is multi-subject from day one — adding Maths or Social Science later is a
-content change, not a refactor, and it moves no existing URL. See
+**Science** and **Mathematics** are live; Social Science is next. Adding a subject is a content
+change, not a refactor, and it moves no existing URL. See
 [docs/ADDING-A-SUBJECT.md](docs/ADDING-A-SUBJECT.md).
 
-- 15 Science chapters, mapped line-by-line to the official CBSE Secondary Curriculum (2026-27)
-- 28 interactive simulations (ray diagrams, circuits, Punnett squares, pH scale, food chains…)
-- 176 practice MCQs with explanations, and ~200 flashcards
+- 29 chapters, mapped line-by-line to the official CBSE Secondary Curriculum (2026-27) —
+  15 in Science, 14 in Mathematics
+- 42 interactive simulations — ray diagrams, circuits, Punnett squares, pH scale and food chains
+  in Science; live graphs, a discriminant explorer, a draggable coordinate plane, circle tangents
+  and a probability simulator in Maths
+- 344 practice MCQs with explanations, and 387 flashcards
 - A per-subject `/revise` page: full formula sheet, all flashcards, and a 25-question mixed test
 - Progress tracking saved in the browser, namespaced per subject — nothing leaves the device
 - Light and dark mode, fully responsive
@@ -77,7 +80,9 @@ Fixed from the first deploy, so nothing your nephew bookmarks ever moves:
 /science                 subject home: chapter grid, marks split, progress
 /science/electricity     a chapter
 /science/revise          formula sheet · flashcards · mixed test
-/mathematics/…           the same three shapes for every future subject
+/mathematics             …and the same three shapes for every subject
+/mathematics/circles
+/mathematics/revise
 ```
 
 Do not rename a `slug` once it is published. Titles can change freely.
@@ -93,11 +98,13 @@ app/
   [subject]/revise/page.tsx     revise
 components/
   ui/       Blocks.tsx (content renderer), Quiz, Flashcards, ChapterView, ReviseView, SiteHeader
-  sims/     optics · electricity · chemistry · biology · environment + registry.tsx
+  sims/     optics · electricity · chemistry · biology · environment
+            maths-algebra · maths-geometry · maths-stats + registry.tsx
 content/
   index.ts        THE SUBJECT REGISTRY — one array; adding a subject is one line
   _template/      copy this folder to start a new subject
   science/        units.ts, ch01.ts … ch15.ts, index.ts
+  mathematics/    units.ts, ch01.ts … ch14.ts, index.ts
 docs/
   ADDING-A-SUBJECT.md
 lib/
@@ -151,8 +158,13 @@ an empty chapter. A content mistake becomes a red build on Vercel rather than a 
 
 ## A note on the syllabus
 
-Content follows the official CBSE curriculum document for Class X Science, 2026-27
-(`cbseacademic.nic.in`). Two chapters — **Periodic Classification of Elements** and **Evolution** —
+Content follows the official CBSE curriculum documents for Class X, 2026-27 (`cbseacademic.nic.in`).
+
+**Mathematics** — the syllabus is identical for Standard (041) and Basic (241); only the difficulty
+of the question paper differs, so this content serves either. Unit marks: Number Systems 6, Algebra
+20, Coordinate Geometry 6, Geometry 15, Trigonometry 12, Mensuration 10, Statistics and Probability 11.
+
+**Science** — two chapters — **Periodic Classification of Elements** and **Evolution** —
 are marked *formative assessment only*, meaning CBSE has excluded them from the year-end paper for
 this session. They are included and clearly badged, since they still appear in periodic tests and
 underpin other chapters. The same badge logic covers the motor / electromagnetic induction /

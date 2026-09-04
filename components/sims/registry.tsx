@@ -6,6 +6,9 @@ import { OhmsLaw, SeriesParallel, PowerBill, MagneticField, FlemingLHR, Domestic
 import { EquationBalancer, PhScale, ReactivitySeries, HomologousBuilder, PeriodicTable } from "./chemistry";
 import { HeartCirculation, ReflexArc, PunnettSquare, DigestionJourney, PlantTropism, NephronFilter, FlowerAnatomy, NaturalSelection } from "./biology";
 import { FoodChain, WasteSorter, OzoneShield } from "./environment";
+import { PolynomialGraph, LinearPair, QuadraticRoots, APExplorer, FactorHcfLcm } from "./maths-algebra";
+import { SimilarTriangles, CoordinatePlane, TrigRatios, HeightsDistances, CircleTangents, SectorSegment, SolidsCombo } from "./maths-geometry";
+import { GroupedData, ProbabilitySim } from "./maths-stats";
 
 /** TypeScript enforces that this covers exactly the ids in lib/sim-ids.ts. */
 const REGISTRY: Record<SimId, React.ComponentType> = {
@@ -37,6 +40,21 @@ const REGISTRY: Record<SimId, React.ComponentType> = {
   "food-chain": FoodChain,
   "waste-sorter": WasteSorter,
   "ozone-shield": OzoneShield,
+
+  "polynomial-graph": PolynomialGraph,
+  "linear-pair": LinearPair,
+  "quadratic-roots": QuadraticRoots,
+  "ap-explorer": APExplorer,
+  "factor-hcf-lcm": FactorHcfLcm,
+  "similar-triangles": SimilarTriangles,
+  "coordinate-plane": CoordinatePlane,
+  "trig-ratios": TrigRatios,
+  "heights-distances": HeightsDistances,
+  "circle-tangents": CircleTangents,
+  "sector-segment": SectorSegment,
+  "solids-combo": SolidsCombo,
+  "grouped-data": GroupedData,
+  "probability-sim": ProbabilitySim,
 };
 
 export default function Sim({ id }: { id: SimId; title?: string; caption?: string }) {

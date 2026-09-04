@@ -1,5 +1,6 @@
 import type { Subject } from "@/lib/types";
 import { SCIENCE } from "./science";
+import { MATHEMATICS } from "./mathematics";
 import { validateSubjects } from "@/lib/validate";
 
 /**
@@ -12,10 +13,10 @@ import { validateSubjects } from "@/lib/validate";
  */
 export const SUBJECTS: Subject[] = [
   SCIENCE,
+  MATHEMATICS,
   // Placeholders so the site shows what is coming. Replace each with a real
   // Subject import when its content is ready — the slug stays the same, so the
   // URL never changes.
-  planned("mathematics", "Mathematics", "Algebra, geometry, trigonometry and statistics — worked out step by step.", "#f43f5e"),
   planned("social-science", "Social Science", "History, geography, civics and economics, tied to how India actually works.", "#0ea5e9"),
 ];
 

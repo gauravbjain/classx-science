@@ -18,6 +18,12 @@ export const SIM_IDS = [
   "nephron-filter", "flower-anatomy", "natural-selection",
   // environment
   "food-chain", "waste-sorter", "ozone-shield",
+
+  // ---- mathematics ----
+  "polynomial-graph", "linear-pair", "quadratic-roots", "ap-explorer", "factor-hcf-lcm",
+  "similar-triangles", "coordinate-plane", "trig-ratios", "heights-distances",
+  "circle-tangents", "sector-segment", "solids-combo",
+  "grouped-data", "probability-sim",
 ] as const;
 
 export type SimId = (typeof SIM_IDS)[number];
