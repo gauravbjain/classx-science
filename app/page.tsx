@@ -2,6 +2,7 @@ import Link from "next/link";
 import { SUBJECTS } from "@/content";
 import LibraryProgress from "@/components/ui/LibraryProgress";
 import StatsPanel from "@/components/ui/StatsPanel";
+import Greeting from "@/components/ui/Greeting";
 
 export default function Library() {
   const live = SUBJECTS.filter((s) => s.status === "live");
@@ -9,18 +10,10 @@ export default function Library() {
 
   return (
     <div className="mx-auto max-w-5xl px-5 pb-20">
-      <section className="pt-12 sm:pt-20">
-        <div className="text-[12px] font-semibold uppercase tracking-[0.12em] text-[var(--accent)]">
-          CBSE · Class X · Session 2026-27
-        </div>
-        <h1 className="mt-3 max-w-2xl text-[2.4rem] font-semibold leading-[1.08] tracking-tight sm:text-[3.4rem]">
-          Everything, made obvious.
-        </h1>
-        <p className="mt-4 max-w-xl font-serif text-[1.16rem] leading-relaxed muted">
-          Each subject explained the way it should have been the first time — with things you can
-          pull, drag and break until the idea clicks.
-        </p>
-      </section>
+      <Greeting subjects={live.map((s) => ({ slug: s.slug, name: s.name }))} />
+      <p className="mt-6 text-[12px] font-semibold uppercase tracking-[0.12em] text-[var(--accent)]">
+        CBSE · Class X · Session 2026-27
+      </p>
 
       <section className="mt-10 grid gap-4 sm:grid-cols-2">
         {live.map((s) => {
