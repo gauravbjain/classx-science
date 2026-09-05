@@ -14,6 +14,10 @@ change, not a refactor, and it moves no existing URL. See
   and a probability simulator in Maths; scrubbable timelines, a latitude-and-longitude India
   locator with a test mode, and sector, credit and globalisation models in Social Science
 - 570 practice MCQs with explanations, and 657 flashcards
+- A **Practice** tab in every chapter: ~920 board-style written questions (1–5 marks) with model
+  answers, ~200 assertion–reason items, and ~95 case / source-based questions — each tagged by
+  weightage (high · common · occasional) with the years it has appeared, plus a "most-asked only"
+  filter and a "where the marks are" topic guide
 - A per-subject `/revise` page: full formula sheet, all flashcards, and a 25-question mixed test
 - Progress tracking saved in the browser, namespaced per subject — nothing leaves the device
 - Light and dark mode, fully responsive
@@ -130,7 +134,10 @@ array of typed blocks:
 | `steps` | a worked example, hidden behind a "show the solution" button |
 | `sim` | drops an interactive simulation in by id |
 
-Plus `formulas`, `examFocus`, `flashcards` and `quiz` arrays per chapter.
+Plus `formulas`, `examFocus`, `flashcards` and `quiz` arrays per chapter — and, for exam practice,
+`keyTopics` (syllabus topics rated by board weightage), `written` (marks-tagged subjective questions
+with model answers), `assertionReason` and `caseStudies`. All four are optional, so a chapter can be
+filled in progressively; the **Practice** tab appears automatically once any of them is present.
 
 ### Adding a simulation
 

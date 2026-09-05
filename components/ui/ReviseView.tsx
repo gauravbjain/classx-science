@@ -1,16 +1,46 @@
 "use client";
 import { useMemo, useState } from "react";
-import type { Subject } from "@/lib/types";
+import type { Subject, Importance } from "@/lib/types";
 import Quiz from "./Quiz";
 import Flashcards from "./Flashcards";
+import { WrittenCard, ARCard, CaseCard } from "./Practice";
 
-type Tab = "formulas" | "cards" | "test";
+type Tab = "formulas" | "cards" | "practice" | "test";
 
 export default function ReviseView({ subject }: { subject: Subject }) {
   const chapters = subject.chapters;
   const [tab, setTab] = useState<Tab>("formulas");
   const [chSlug, setChSlug] = useState(chapters[0].slug);
   const [seed, setSeed] = useState(0);
+
+  // ---- practice aggregation across the whole subject ----
+  const [pracCh, setPracCh] = useState("all");
+  const [highOnly, setHighOnly] = useState(true);
+
+  const allWritten = useMemo(
+    () => chapters.flatMap((c) => (c.written ?? []).map((w) => ({ item: w, chapter: c.title, slug: c.slug }))),
+    [chapters]
+  );
+  const allAR = useMemo(
+    () => chapters.flatMap((c) => (c.assertionReason ?? []).map((a) => ({ item: a, chapter: c.title, slug: c.slug }))),
+    [chapters]
+  );
+  const allCase = useMemo(
+    () => chapters.flatMap((c) => (c.caseStudies ?? []).map((cs) => ({ item: cs, chapter: c.title, slug: c.slug }))),
+    [chapters]
+  );
+  const hasPractice = allWritten.length + allAR.length + allCase.length > 0;
+
+  const keep = <T extends { importance?: Importance }>(rows: { item: T; chapter: string; slug: string }[]) =>
+    rows
+      .filter((r) => pracCh === "all" || r.slug === pracCh)
+      .filter((r) => !highOnly || r.item.importance === "high");
+
+  const written = keep(allWritten);
+  const ar = keep(allAR);
+  const cases = keep(allCase);
+  const showChapterTag = pracCh === "all";
+  const pracEmpty = written.length + ar.length + cases.length === 0;
 
   const mixed = useMemo(() => {
     const all = chapters.flatMap((c) => c.quiz.map((q) => ({ ...q, ch: c.title })));
@@ -19,6 +49,13 @@ export default function ReviseView({ subject }: { subject: Subject }) {
   }, [seed]);
 
   const cards = chapters.find((c) => c.slug === chSlug)!.flashcards;
+
+  const tabs: [Tab, string][] = [
+    ["formulas", "Formula sheet"],
+    ["cards", "Flashcards"],
+    ...(hasPractice ? ([["practice", "Practice"]] as [Tab, string][]) : []),
+    ["test", "Mixed test"],
+  ];
 
   return (
     <>
@@ -33,7 +70,7 @@ export default function ReviseView({ subject }: { subject: Subject }) {
 
       <div className="no-print sticky top-[96px] sm:top-[60px] z-30 mt-6 border-b hairline bg-[var(--bg)] backdrop-blur-xl">
         <div className="mx-auto flex max-w-3xl gap-1 overflow-x-auto px-5 py-2 no-scrollbar">
-          {([["formulas", "Formula sheet"], ["cards", "Flashcards"], ["test", "Mixed test"]] as [Tab, string][]).map(([k, l]) => (
+          {tabs.map(([k, l]) => (
             <button key={k} onClick={() => setTab(k)}
               className={`shrink-0 rounded-full px-3.5 py-1.5 text-[13px] font-medium transition ${
                 tab === k ? "bg-[var(--ink)] text-[var(--bg)]" : "faint hover:bg-[var(--surface-2)]"}`}>{l}</button>
@@ -71,6 +108,58 @@ export default function ReviseView({ subject }: { subject: Subject }) {
             {chapters.map((c) => <option key={c.slug} value={c.slug}>{c.num}. {c.title}</option>)}
           </select>
           <Flashcards key={chSlug} cards={cards} />
+        </div>
+      )}
+
+      {tab === "practice" && (
+        <div className="mt-8 fade-up">
+          <p className="text-[0.9rem] muted">
+            Every board-style written, assertion–reason and case question in {subject.name}, in one place.
+            Start with the most-asked — attempt on paper, then reveal the answer.
+          </p>
+          <div className="mt-4 flex flex-wrap items-center gap-3">
+            <select value={pracCh} onChange={(e) => setPracCh(e.target.value)}
+              className="rounded-xl border hairline bg-[var(--surface)] px-4 py-2.5 text-[0.9rem]">
+              <option value="all">All chapters</option>
+              {chapters.map((c) => <option key={c.slug} value={c.slug}>{c.num}. {c.title}</option>)}
+            </select>
+            <label className="flex items-center gap-2 text-[13px] muted">
+              <input type="checkbox" checked={highOnly} onChange={(e) => setHighOnly(e.target.checked)} className="accent-[var(--accent)]" />
+              Most-asked only
+            </label>
+            <span className="ml-auto text-[12px] faint">{written.length + ar.length + cases.length} questions</span>
+          </div>
+
+          {pracEmpty && (
+            <p className="mt-8 rounded-xl border hairline px-4 py-6 text-center text-[0.9rem] muted">
+              {highOnly ? "No high-weightage questions match — untick “most-asked only” to see the rest." : "No practice questions here yet."}
+            </p>
+          )}
+
+          {written.length > 0 && (
+            <section className="mt-8">
+              <h2 className="text-[1.2rem] font-semibold tracking-tight">Board-style questions <span className="faint font-normal">({written.length})</span></h2>
+              <div className="mt-4 space-y-3">
+                {written.map((r, i) => <WrittenCard key={i} w={r.item} n={i + 1} chapter={showChapterTag ? r.chapter : undefined} />)}
+              </div>
+            </section>
+          )}
+          {ar.length > 0 && (
+            <section className="mt-10">
+              <h2 className="text-[1.2rem] font-semibold tracking-tight">Assertion &amp; Reason <span className="faint font-normal">({ar.length})</span></h2>
+              <div className="mt-4 space-y-3">
+                {ar.map((r, i) => <ARCard key={i} ar={r.item} n={i + 1} chapter={showChapterTag ? r.chapter : undefined} />)}
+              </div>
+            </section>
+          )}
+          {cases.length > 0 && (
+            <section className="mt-10">
+              <h2 className="text-[1.2rem] font-semibold tracking-tight">Case / source-based <span className="faint font-normal">({cases.length})</span></h2>
+              <div className="mt-4 space-y-3">
+                {cases.map((r, i) => <CaseCard key={i} cs={r.item} n={i + 1} chapter={showChapterTag ? r.chapter : undefined} />)}
+              </div>
+            </section>
+          )}
         </div>
       )}
 

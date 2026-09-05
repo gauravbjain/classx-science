@@ -50,11 +50,12 @@ function Reveal({ label = "Show model answer", children }: { label?: string; chi
   );
 }
 
-function WrittenCard({ w, n }: { w: WrittenQ; n: number }) {
+export function WrittenCard({ w, n, chapter }: { w: WrittenQ; n: number; chapter?: string }) {
   return (
     <div className="card p-5">
       <div className="flex flex-wrap items-center gap-2">
         <span className="text-[11px] font-bold uppercase tracking-[0.08em] faint">Q{n}</span>
+        {chapter && <span className="rounded-full bg-[var(--surface-2)] px-2 py-0.5 text-[10px] font-medium muted">{chapter}</span>}
         <MarksTag marks={w.marks} />
         {w.kind && w.kind !== "short" && w.kind !== "long" && (
           <span className="rounded-full bg-[var(--surface-2)] px-2 py-0.5 text-[10px] font-semibold muted capitalize">{w.kind}</span>
@@ -71,12 +72,13 @@ function WrittenCard({ w, n }: { w: WrittenQ; n: number }) {
   );
 }
 
-function ARCard({ ar, n }: { ar: AssertionReasonQ; n: number }) {
+export function ARCard({ ar, n, chapter }: { ar: AssertionReasonQ; n: number; chapter?: string }) {
   const [picked, setPicked] = useState<number | null>(null);
   return (
     <div className="card p-5">
       <div className="flex flex-wrap items-center gap-2">
         <span className="text-[11px] font-bold uppercase tracking-[0.08em] faint">Assertion–Reason {n}</span>
+        {chapter && <span className="rounded-full bg-[var(--surface-2)] px-2 py-0.5 text-[10px] font-medium muted">{chapter}</span>}
         <ImportanceBadge level={ar.importance} />
         <span className="ml-auto"><Years years={ar.years} /></span>
       </div>
@@ -115,11 +117,12 @@ function ARCard({ ar, n }: { ar: AssertionReasonQ; n: number }) {
   );
 }
 
-function CaseCard({ cs, n }: { cs: CaseStudyQ; n: number }) {
+export function CaseCard({ cs, n, chapter }: { cs: CaseStudyQ; n: number; chapter?: string }) {
   return (
     <div className="card p-5">
       <div className="flex flex-wrap items-center gap-2">
         <span className="text-[11px] font-bold uppercase tracking-[0.08em] faint">Case study {n}</span>
+        {chapter && <span className="rounded-full bg-[var(--surface-2)] px-2 py-0.5 text-[10px] font-medium muted">{chapter}</span>}
         <ImportanceBadge level={cs.importance} />
         <span className="ml-auto"><Years years={cs.years} /></span>
       </div>
