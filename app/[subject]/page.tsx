@@ -74,7 +74,7 @@ export default async function SubjectHome({ params }: { params: Promise<{ subjec
                       <span>{c.quiz.length} questions</span>
                       {c.formative && (
                         <span className="rounded-full bg-amber-500/12 px-2 py-0.5 font-semibold text-amber-700 dark:text-amber-300">
-                          formative only
+                          {c.formativeLabel ?? "formative only"}
                         </span>
                       )}
                     </div>

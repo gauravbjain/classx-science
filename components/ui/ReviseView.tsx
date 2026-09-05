@@ -31,7 +31,7 @@ export default function ReviseView({ subject }: { subject: Subject }) {
         </p>
       </header>
 
-      <div className="no-print sticky top-[3.55rem] z-30 mt-6 border-b hairline bg-[var(--bg)] backdrop-blur-xl">
+      <div className="no-print sticky top-[96px] sm:top-[60px] z-30 mt-6 border-b hairline bg-[var(--bg)] backdrop-blur-xl">
         <div className="mx-auto flex max-w-3xl gap-1 overflow-x-auto px-5 py-2 no-scrollbar">
           {([["formulas", "Formula sheet"], ["cards", "Flashcards"], ["test", "Mixed test"]] as [Tab, string][]).map(([k, l]) => (
             <button key={k} onClick={() => setTab(k)}

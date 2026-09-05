@@ -38,7 +38,9 @@
 
 * { -webkit-tap-highlight-color: transparent; }
 
-html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
+/* Header is two rows on phones (logo row + subject row) and one row from sm up. */
+html { scroll-behavior: smooth; scroll-padding-top: 10rem; }
+@media (min-width: 640px) { html { scroll-padding-top: 7rem; } }
 
 body {
   background: var(--bg);

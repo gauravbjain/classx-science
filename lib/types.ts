@@ -38,6 +38,7 @@ export type Chapter = {
   unitName: string;
   marks: string;
   formative?: boolean;
+  formativeLabel?: string;   // short badge text, e.g. "project work"; defaults to "formative only"
   minutes: number;
   blurb: string;
   bigIdea: string;

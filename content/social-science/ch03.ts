@@ -1,0 +1,96 @@
+import type { Chapter } from "@/lib/types";
+
+export const ch03: Chapter = {
+  slug: "making-of-a-global-world",
+  num: 3,
+  title: "The Making of a Global World",
+  unit: "history",
+  unitName: "India and the Contemporary World — II",
+  marks: "History · 20 marks",
+  minutes: 18,
+  blurb: "Trade, work and disease have been moving between continents for centuries — and rarely on equal terms.",
+  bigIdea: "Globalisation is not new. What changes is who controls the flows of goods, people and money — and who pays the price when they shift.",
+  syllabus: [
+    "The pre-modern world",
+    "Silk routes link the world",
+    "Food travels: spaghetti and potato",
+    "Conquest, disease and trade",
+    "Subtopics 2 to 4.4 are assessed as Periodic Assessment only",
+  ],
+  blocks: [
+    { t: "note", kind: "exam", title: "What is examined here", html: "For 2026-27 CBSE examines <strong>subtopics 1 to 1.3</strong> of this chapter in the board paper — the pre-modern world, the silk routes, food that travelled, and conquest, disease and trade. The later sections (the nineteenth century, the inter-war economy, rebuilding after the Second World War) are assessed as <strong>periodic assessment only</strong>. They are included below because they carry the argument, and because the interdisciplinary project draws on them." },
+
+    { t: "h", text: "The world was never separate" },
+    { t: "sim", id: "global-world-timeline" },
+    { t: "p", html: "From ancient times, travellers, traders, priests and pilgrims moved for knowledge, opportunity and spiritual fulfilment, and carried goods, money, values, skills, ideas, inventions — and germs — with them. As early as 3000 BCE, coastal trade linked the Indus valley civilisations with present-day West Asia. Cowries from the Maldives found their way to China and East Africa." },
+
+    { t: "h", text: "The silk routes" },
+    { t: "list", items: [
+      "A vivid name for the links between distant parts of the world. There were several silk routes, over land and sea, spanning Asia and linking it with Europe and northern Africa.",
+      "Known to have existed since before the Christian era and thriving almost till the fifteenth century.",
+      "<strong>Chinese pottery</strong> travelled the same route, as did textiles and spices from India and Southeast Asia. In return, <strong>precious metals — gold and silver — flowed from Europe to Asia</strong>.",
+      "Trade and cultural exchange went together. Early Christian missionaries, Muslim preachers and Buddhism, which emerged from eastern India, all travelled these routes.",
+    ] },
+    { t: "note", kind: "idea", html: "Notice the direction: goods moved west, precious metals moved east. That asymmetry is worth remembering, because it reverses after 1492." },
+
+    { t: "h", text: "Food that travelled" },
+    { t: "p", html: "Traders and travellers introduced new crops to the lands they visited. Ready foodstuff in distant parts of the world might share common origins — spaghetti and noodles are a plausible example, though it is uncertain who inspired whom." },
+    { t: "note", kind: "real", title: "The potato and the Irish famine", html: "Many of our common foods — <strong>potatoes, soya, groundnuts, maize, tomatoes, chillies, sweet potatoes</strong> — were not known in Europe and Asia until about five centuries ago. They came from the Americas.<br><br>Europe's poor began to eat better and live longer with the introduction of the potato. Ireland's poorest peasants became so dependent on it that when disease destroyed the crop in the mid-1840s, hundreds of thousands died of starvation. That is the <strong>Irish Potato Famine</strong>, and it is the standard example of the risk of dependence on a single crop." },
+
+    { t: "h", text: "Conquest, disease and trade" },
+    { t: "p", html: "Until the fifteenth century America had remained cut off from regular contact with the rest of the world. From the sixteenth century, European sailors found a sea route to Asia and also stumbled on the Americas. Precious metals, particularly silver from mines in present-day Peru and Mexico, enhanced Europe's wealth and financed its trade with Asia." },
+    { t: "note", kind: "why", title: "The weapon that was not a weapon", html: "The Spanish conquerors of America did not win primarily through superior firepower. Their most powerful weapon was <strong>smallpox</strong>, which they carried on their person.<br><br>America's original inhabitants had no immunity to diseases from Europe. Smallpox proved a deadly killer, spreading deep into the continent ahead of any European reaching there, killing and decimating whole communities and paving the way for conquest. Europeans, by contrast, died in large numbers of tropical fevers in Africa — which is why they could not conquer it as easily." },
+    { t: "note", kind: "idea", html: "Until well into the eighteenth century, <strong>China and India were among the world's richest countries</strong> and pre-eminent in Asian trade. From the fifteenth century China restricted overseas contacts and retreated into isolation. The reduced role of China, and the rising importance of the Americas, gradually moved the centre of world trade westwards. Europe emerged as the centre of world trade." },
+
+    { t: "h", text: "The nineteenth century — three flows" },
+    { t: "note", kind: "exam", html: "Periodic assessment only, but the framework is worth knowing because it is the clearest way to think about globalisation in the Economics book too." },
+    { t: "table", head: ["Flow", "What moved", "Example"], rows: [
+      ["<strong>Trade</strong>", "Goods — cloth, wheat, machinery", "The abolition of the Corn Laws in Britain in 1846 let cheap food flood in, and distant lands began growing food for Britain"],
+      ["<strong>Labour</strong>", "People, in search of work", "Indentured labour from India to the Caribbean, Mauritius and Fiji — described as a 'new system of slavery'"],
+      ["<strong>Capital</strong>", "Investment, over short or long term", "British finance built railways, ports and mines across the world — and Britain became the world's leading creditor"],
+    ] },
+    { t: "note", kind: "real", html: "<strong>Rinderpest</strong> — a fast-spreading cattle plague — arrived in Africa in the late 1880s with infected cattle imported from Asia. It moved across the continent in about a decade and killed roughly <strong>90% of the cattle</strong>. Losing their livestock, Africans lost their means of livelihood, and colonisers were able to force them into the labour market. Disease again did the work of conquest." },
+
+    { t: "h", text: "The twentieth century" },
+    { t: "list", items: [
+      "<strong>The First World War (1914–18)</strong> was the first modern industrial war, fought with machine guns, tanks, aircraft and chemical weapons. Around 9 million died and 20 million were injured — most of them men of working age. Britain borrowed heavily from US banks and turned from the world's leading lender into a debtor.",
+      "<strong>The Great Depression (1929)</strong> began with agricultural overproduction and falling prices. As American loans were withdrawn, the crisis spread. <strong>India's exports and imports nearly halved between 1928 and 1934</strong>, and peasants who produced for the world market fell deep into debt.",
+      "<strong>Bretton Woods, 1944</strong> established the IMF and the World Bank to preserve economic stability and full employment in the industrial world — and gave the western industrial powers the controlling vote.",
+    ] },
+    { t: "note", kind: "idea", html: "This chapter and the Economics chapter on Globalisation are two halves of one argument. The interdisciplinary project the syllabus assigns joins them deliberately — the same forces, seen a century apart." },
+  ],
+  examFocus: [
+    "That subtopics 1 to 1.3 are examined and the rest is periodic assessment only.",
+    "The silk routes: what travelled which way, and that religion travelled too.",
+    "The potato and the Irish famine as the example of dependence on one crop.",
+    "Smallpox as the decisive weapon in the conquest of America.",
+    "Why the centre of world trade shifted westwards after the fifteenth century.",
+    "Rinderpest in Africa, and how disease was used to force people into wage labour.",
+  ],
+  flashcards: [
+    { q: "What were the silk routes?", a: "A network of overland and sea routes linking Asia with Europe and northern Africa, known to have existed before the Christian era and thriving almost till the fifteenth century. They carried goods, ideas and religions." },
+    { q: "What travelled in each direction along the silk routes?", a: "Chinese pottery, and textiles and spices from India and Southeast Asia, travelled west. In return, precious metals — gold and silver — flowed from Europe to Asia." },
+    { q: "Name five foods that came to Europe and Asia from the Americas.", a: "Potatoes, soya, groundnuts, maize, tomatoes, chillies and sweet potatoes were all unknown in Europe and Asia until about five centuries ago." },
+    { q: "What caused the Irish Potato Famine?", a: "Ireland's poorest peasants had become so dependent on the potato that when disease destroyed the crop in the mid-1840s, hundreds of thousands died of starvation." },
+    { q: "What was the most powerful weapon of the Spanish conquerors of America?", a: "Smallpox, which they carried on their person. America's original inhabitants had no immunity to it, so it spread ahead of the Europeans, killing whole communities and clearing the way for conquest." },
+    { q: "Why could Europeans not conquer Africa as easily as America?", a: "Africa had its own diseases — tropical fevers — to which Europeans had no immunity, so they died in large numbers there. The immunity advantage ran the other way." },
+    { q: "Why did the centre of world trade shift westwards?", a: "China restricted overseas contacts from the fifteenth century and retreated into isolation, while the Americas were drawn into world trade. Europe emerged as the centre." },
+    { q: "What was rinderpest and what did it do?", a: "A fast-spreading cattle plague that reached Africa in the late 1880s with infected cattle from Asia. It killed about 90% of African cattle within a decade, destroying livelihoods and forcing Africans into the colonial labour market." },
+    { q: "What was indentured labour?", a: "A bonded labourer under contract to work for an employer for a specific period to pay off a passage. Indians went to the Caribbean, Mauritius and Fiji. It has been described as a 'new system of slavery'." },
+    { q: "What were the Corn Laws and what happened when they were abolished?", a: "British laws restricting the import of corn, which kept food prices high. After their abolition in 1846, cheap imported food undercut British agriculture, drove labour to cities, and drew distant lands into food production for Britain." },
+    { q: "What was agreed at Bretton Woods in 1944?", a: "The International Monetary Fund and the World Bank were established to manage post-war finance and reconstruction, with the western industrial powers holding the controlling vote." },
+    { q: "How did the Great Depression affect India?", a: "India's exports and imports nearly halved between 1928 and 1934. Agricultural prices collapsed while the colonial government refused to reduce revenue demands, so peasants fell deeply into debt — which fed into the Civil Disobedience movement." },
+  ],
+  quiz: [
+    { q: "Cowries used as a form of currency came from:", options: ["China", "The Maldives", "Africa", "Europe"], answer: 1, why: "Cowries from the Maldives found their way to China and East Africa, showing how far pre-modern trade networks reached." },
+    { q: "Which of these did NOT travel along the silk routes?", options: ["Chinese pottery", "Indian spices", "Buddhism", "Potatoes"], answer: 3, why: "Potatoes came from the Americas, which had no regular contact with the rest of the world until the late fifteenth century." },
+    { q: "The Irish Potato Famine of the 1840s shows the danger of:", options: ["Free trade", "Depending heavily on a single crop", "Industrialisation", "Colonial rule"], answer: 1, why: "Ireland's poor had become so dependent on the potato that when disease destroyed the crop, hundreds of thousands starved." },
+    { q: "The most powerful weapon of the Spanish conquerors of America was:", options: ["Guns", "Horses", "Smallpox", "Ships"], answer: 2, why: "Native Americans had no immunity to smallpox, which spread ahead of the conquerors and decimated communities." },
+    { q: "Precious metals that financed Europe's trade with Asia came largely from mines in:", options: ["South Africa", "Peru and Mexico", "Australia", "Siberia"], answer: 1, why: "Silver from mines in present-day Peru and Mexico enhanced Europe's wealth and financed its trade with Asia." },
+    { q: "Rinderpest killed about what proportion of Africa's cattle?", options: ["10%", "50%", "90%", "25%"], answer: 2, why: "Within a decade of arriving in the late 1880s it had killed roughly 90% of the cattle, destroying African livelihoods." },
+    { q: "The Corn Laws in Britain were abolished in:", options: ["1815", "1846", "1890", "1914"], answer: 1, why: "Under pressure from industrialists and urban dwellers, the laws restricting corn imports were abolished in 1846." },
+    { q: "Indentured labour has been described as:", options: ["Free migration", "A new system of slavery", "Skilled emigration", "Voluntary settlement"], answer: 1, why: "Workers were bonded by contract, often recruited by deception, and the system has been called a 'new system of slavery'." },
+    { q: "After the First World War, Britain became:", options: ["The world's leading lender", "A debtor nation", "Economically isolated", "The largest exporter"], answer: 1, why: "Having borrowed heavily from US banks during the war, Britain shifted from the world's leading creditor to a debtor." },
+    { q: "The IMF and World Bank were set up at:", options: ["The Congress of Vienna", "Bretton Woods, 1944", "The League of Nations", "The Treaty of Versailles"], answer: 1, why: "The Bretton Woods conference of 1944 established both institutions to manage post-war finance and reconstruction." },
+  ],
+};

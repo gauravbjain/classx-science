@@ -41,7 +41,7 @@ export default function ChapterView({
           <span className="rounded-full border hairline px-2.5 py-1 text-[11px] font-medium faint">{ch.minutes} min read</span>
           {ch.formative && (
             <span className="rounded-full bg-amber-500/12 px-2.5 py-1 text-[11px] font-semibold text-amber-700 dark:text-amber-300">
-              Not in the year-end paper
+              Not in the year-end paper{ch.formativeLabel ? ` · ${ch.formativeLabel}` : ""}
             </span>
           )}
         </div>
@@ -50,7 +50,7 @@ export default function ChapterView({
       </header>
 
       {/* tabs */}
-      <div className="no-print sticky top-[3.55rem] z-30 mt-8 border-b hairline bg-[var(--bg)] backdrop-blur-xl">
+      <div className="no-print sticky top-[96px] sm:top-[60px] z-30 mt-8 border-b hairline bg-[var(--bg)] backdrop-blur-xl">
         <div className="mx-auto flex max-w-3xl gap-1 overflow-x-auto px-5 py-2 no-scrollbar">
           {([["learn", "Learn"], ["cards", `Flashcards (${ch.flashcards.length})`], ["quiz", `Quiz (${ch.quiz.length})`]] as [Tab, string][]).map(([k, l]) => (
             <button key={k} onClick={() => setTab(k)}

@@ -1,6 +1,7 @@
 import type { Subject } from "@/lib/types";
 import { SCIENCE } from "./science";
 import { MATHEMATICS } from "./mathematics";
+import { SOCIAL_SCIENCE } from "./social-science";
 import { validateSubjects } from "@/lib/validate";
 
 /**
@@ -14,10 +15,7 @@ import { validateSubjects } from "@/lib/validate";
 export const SUBJECTS: Subject[] = [
   SCIENCE,
   MATHEMATICS,
-  // Placeholders so the site shows what is coming. Replace each with a real
-  // Subject import when its content is ready — the slug stays the same, so the
-  // URL never changes.
-  planned("social-science", "Social Science", "History, geography, civics and economics, tied to how India actually works.", "#0ea5e9"),
+  SOCIAL_SCIENCE,
 ];
 
 validateSubjects(SUBJECTS);
@@ -32,7 +30,12 @@ export function getLiveSubject(slug: string): Subject | undefined {
   return LIVE_SUBJECTS.find((s) => s.slug === slug);
 }
 
-function planned(slug: string, name: string, tagline: string, accent: string): Subject {
+/**
+ * Helper for stubbing a subject that is announced but not written yet.
+ * Add `planned("history-optional", ...)` to SUBJECTS to show a "coming soon"
+ * card whose URL will not change when the real content lands.
+ */
+export function planned(slug: string, name: string, tagline: string, accent: string): Subject {
   return {
     slug, name, tagline,
     headline: `${name}, made obvious.`,

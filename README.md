@@ -3,16 +3,17 @@
 An interactive learning site for **CBSE Class X**, session 2026-27. Built to be read on a phone or a
 laptop, with a simulation you can actually play with in every chapter.
 
-**Science** and **Mathematics** are live; Social Science is next. Adding a subject is a content
+**Science**, **Mathematics** and **Social Science** are live. Adding a subject is a content
 change, not a refactor, and it moves no existing URL. See
 [docs/ADDING-A-SUBJECT.md](docs/ADDING-A-SUBJECT.md).
 
-- 29 chapters, mapped line-by-line to the official CBSE Secondary Curriculum (2026-27) —
-  15 in Science, 14 in Mathematics
-- 42 interactive simulations — ray diagrams, circuits, Punnett squares, pH scale and food chains
+- 51 chapters, mapped line-by-line to the official CBSE Secondary Curriculum (2026-27) —
+  15 in Science, 14 in Mathematics, 22 in Social Science
+- 65 interactive simulations — ray diagrams, circuits, Punnett squares, pH scale and food chains
   in Science; live graphs, a discriminant explorer, a draggable coordinate plane, circle tangents
-  and a probability simulator in Maths
-- 344 practice MCQs with explanations, and 387 flashcards
+  and a probability simulator in Maths; scrubbable timelines, a latitude-and-longitude India
+  locator with a test mode, and sector, credit and globalisation models in Social Science
+- 570 practice MCQs with explanations, and 657 flashcards
 - A per-subject `/revise` page: full formula sheet, all flashcards, and a 25-question mixed test
 - Progress tracking saved in the browser, namespaced per subject — nothing leaves the device
 - Light and dark mode, fully responsive
@@ -169,6 +170,16 @@ are marked *formative assessment only*, meaning CBSE has excluded them from the 
 this session. They are included and clearly badged, since they still appear in periodic tests and
 underpin other chapters. The same badge logic covers the motor / electromagnetic induction /
 generator exclusion inside Chapter 14.
+
+**Social Science** — four books, 20 marks each: History (*India and the Contemporary World — II*),
+Geography (*Contemporary India — II*), Civics (*Democratic Politics — II*) and Economics
+(*Understanding Economic Development*). Chapter numbers on each card are the numbers **within that
+book**, which is how the textbooks and the board paper refer to them. Two chapters sit outside the
+written paper and are badged accordingly: History's **The Age of Industrialisation** is periodic
+assessment only, and Economics' **Consumer Rights** is project work. Geography's **Lifelines of
+National Economy** is assessed through map work alone. Map-work items are called out in an exam
+note in each chapter and are plotted, at real latitude and longitude, in the India locator
+simulation.
 
 Always cross-check with the NCERT textbook and the school teacher — this is a companion, not a
 replacement.

@@ -24,6 +24,16 @@ export const SIM_IDS = [
   "similar-triangles", "coordinate-plane", "trig-ratios", "heights-distances",
   "circle-tangents", "sector-segment", "solids-combo",
   "grouped-data", "probability-sim",
+
+  // ---- social science ----
+  "europe-timeline", "india-freedom-timeline", "global-world-timeline",
+  "print-culture-timeline", "industrialisation-timeline",
+  "india-locator", "land-use", "cropping-seasons", "wildlife-status",
+  "dam-tradeoffs", "energy-mix", "industry-location", "transport-compare",
+  "power-sharing-forms", "federalism-lists", "social-divisions",
+  "party-system", "democracy-outcomes",
+  "development-compare", "sectors-economy", "money-credit",
+  "globalisation-chain", "consumer-rights",
 ] as const;
 
 export type SimId = (typeof SIM_IDS)[number];
