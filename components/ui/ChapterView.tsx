@@ -7,7 +7,7 @@ import { BlockList, slugify } from "./Blocks";
 import Quiz from "./Quiz";
 import Flashcards from "./Flashcards";
 import Practice from "./Practice";
-import { markRead } from "@/lib/progress";
+import { markRead, recordAnswer } from "@/lib/progress";
 
 type Tab = "learn" | "cards" | "quiz" | "practice";
 
@@ -148,13 +148,14 @@ export default function ChapterView({
 
       {tab === "quiz" && (
         <div className="mt-8 fade-up">
-          <Quiz items={ch.quiz} subject={subjectSlug} slug={ch.slug} />
+          <Quiz items={ch.quiz} subject={subjectSlug} slug={ch.slug}
+            onAnswer={(correct, idx) => recordAnswer(subjectSlug, ch.slug, "q", idx, correct)} />
         </div>
       )}
 
       {tab === "practice" && (
         <div className="mt-8 fade-up">
-          <Practice ch={ch} />
+          <Practice ch={ch} subjectSlug={subjectSlug} />
         </div>
       )}
 

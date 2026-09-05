@@ -1,6 +1,7 @@
 "use client";
 import { useMemo, useState, type ReactNode } from "react";
 import type { Chapter, Importance, WrittenQ, AssertionReasonQ, CaseStudyQ } from "@/lib/types";
+import { recordAnswer } from "@/lib/progress";
 
 const AR_OPTIONS = [
   "Both A and R are true, and R is the correct explanation of A.",
@@ -72,8 +73,13 @@ export function WrittenCard({ w, n, chapter }: { w: WrittenQ; n: number; chapter
   );
 }
 
-export function ARCard({ ar, n, chapter }: { ar: AssertionReasonQ; n: number; chapter?: string }) {
+export function ARCard({ ar, n, chapter, onAnswer }: { ar: AssertionReasonQ; n: number; chapter?: string; onAnswer?: (correct: boolean) => void }) {
   const [picked, setPicked] = useState<number | null>(null);
+  function pick(k: number) {
+    if (picked !== null) return;
+    setPicked(k);
+    onAnswer?.(k === ar.answer);
+  }
   return (
     <div className="card p-5">
       <div className="flex flex-wrap items-center gap-2">
@@ -97,7 +103,7 @@ export function ARCard({ ar, n, chapter }: { ar: AssertionReasonQ; n: number; ch
             else cls = "border hairline opacity-55";
           }
           return (
-            <button key={k} onClick={() => picked === null && setPicked(k)} disabled={picked !== null}
+            <button key={k} onClick={() => pick(k)} disabled={picked !== null}
               className={`flex w-full gap-3 rounded-xl border px-4 py-2.5 text-left text-[0.9rem] transition ${cls}`}>
               <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-[var(--surface-2)] text-[11px] font-bold">
                 {String.fromCharCode(65 + k)}
@@ -148,7 +154,7 @@ export function CaseCard({ cs, n, chapter }: { cs: CaseStudyQ; n: number; chapte
   );
 }
 
-export default function Practice({ ch }: { ch: Chapter }) {
+export default function Practice({ ch, subjectSlug }: { ch: Chapter; subjectSlug?: string }) {
   const [highOnly, setHighOnly] = useState(false);
 
   const written = ch.written ?? [];
@@ -206,7 +212,8 @@ export default function Practice({ ch }: { ch: Chapter }) {
       {a.length > 0 && (
         <section>
           <h2 className="text-[1.2rem] font-semibold tracking-tight">Assertion &amp; Reason</h2>
-          <div className="mt-4 space-y-3">{a.map((x, i) => <ARCard key={i} ar={x} n={i + 1} />)}</div>
+          <div className="mt-4 space-y-3">{a.map((x, i) => <ARCard key={i} ar={x} n={i + 1}
+            onAnswer={subjectSlug ? (correct) => recordAnswer(subjectSlug, ch.slug, "ar", ar.indexOf(x), correct) : undefined} />)}</div>
         </section>
       )}
 

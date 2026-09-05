@@ -18,7 +18,19 @@ change, not a refactor, and it moves no existing URL. See
   answers, ~200 assertion–reason items, and ~95 case / source-based questions — each tagged by
   weightage (high · common · occasional) with the years it has appeared, plus a "most-asked only"
   filter and a "where the marks are" topic guide
-- A per-subject `/revise` page: full formula sheet, all flashcards, and a 25-question mixed test
+- A per-subject `/revise` page: formula sheet, flashcards, a subject-wide practice drill, a
+  **Fix mistakes** tab (weak-spot ranking + a mistake bank that re-asks anything you got wrong until
+  you nail it twice), and a 25-question mixed test
+- A per-subject `/mock` page: a full **80-mark mock board paper**, built fresh to the CBSE section
+  blueprint, on a 3-hour clock — Section A auto-marked, model answers revealed for the rest
+- **Spaced-repetition flashcards** (a "Smart review" mode on `/revise`) — a Leitner scheduler brings
+  each card back just before it would be forgotten
+- **A daily plan** on every subject home: set the exam date and get a live countdown plus a prioritised
+  "what to do today" list (fix mistakes, review due cards, study the next chapter, sit a mock)
+- **Challenge mode** (`/challenge`): build a quick quiz, share the link, and compare scores on the
+  exact same questions — no sign-in, the whole quiz is encoded in the URL
+- **Gamified progress**: XP, levels, a daily-goal ring, a study streak and unlockable badges, shown
+  on the home page and in the header
 - Progress tracking saved in the browser, namespaced per subject — nothing leaves the device
 - Light and dark mode, fully responsive
 
@@ -84,8 +96,10 @@ Fixed from the first deploy, so nothing your nephew bookmarks ever moves:
 /                        the library — every subject
 /science                 subject home: chapter grid, marks split, progress
 /science/electricity     a chapter
-/science/revise          formula sheet · flashcards · mixed test
-/mathematics             …and the same three shapes for every subject
+/science/revise          formulas · flashcards · practice · fix mistakes · mixed test
+/science/mock            a timed 80-mark mock board paper
+/challenge               build & share a head-to-head quiz (link encodes the questions)
+/mathematics             …and the same shapes for every subject
 /mathematics/circles
 /mathematics/revise
 ```

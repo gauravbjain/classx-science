@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { SUBJECTS } from "@/content";
 import LibraryProgress from "@/components/ui/LibraryProgress";
+import StatsPanel from "@/components/ui/StatsPanel";
 
 export default function Library() {
   const live = SUBJECTS.filter((s) => s.status === "live");
@@ -58,6 +59,8 @@ export default function Library() {
           </div>
         ))}
       </section>
+
+      <StatsPanel />
 
       <p className="mt-10 text-[0.9rem] faint">
         Progress is saved separately for each subject, in this browser only.

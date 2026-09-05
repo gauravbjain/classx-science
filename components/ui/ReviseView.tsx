@@ -1,17 +1,21 @@
 "use client";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { Subject, Importance } from "@/lib/types";
 import Quiz from "./Quiz";
 import Flashcards from "./Flashcards";
 import { WrittenCard, ARCard, CaseCard } from "./Practice";
+import MistakeReview from "./MistakeReview";
+import ReviewCards from "./ReviewCards";
+import { recordAttempt } from "@/lib/progress";
 
-type Tab = "formulas" | "cards" | "practice" | "test";
+type Tab = "formulas" | "cards" | "practice" | "mistakes" | "test";
 
 export default function ReviseView({ subject }: { subject: Subject }) {
   const chapters = subject.chapters;
   const [tab, setTab] = useState<Tab>("formulas");
   const [chSlug, setChSlug] = useState(chapters[0].slug);
   const [seed, setSeed] = useState(0);
+  const [cardMode, setCardMode] = useState<"review" | "browse">("review");
 
   // ---- practice aggregation across the whole subject ----
   const [pracCh, setPracCh] = useState("all");
@@ -50,10 +54,17 @@ export default function ReviseView({ subject }: { subject: Subject }) {
 
   const cards = chapters.find((c) => c.slug === chSlug)!.flashcards;
 
+  // deep-link: /<subject>/revise#mistakes (or #practice) opens that tab
+  useEffect(() => {
+    const h = window.location.hash.replace("#", "");
+    if (h === "mistakes" || h === "practice" || h === "test" || h === "cards" || h === "formulas") setTab(h as Tab);
+  }, []);
+
   const tabs: [Tab, string][] = [
     ["formulas", "Formula sheet"],
     ["cards", "Flashcards"],
     ...(hasPractice ? ([["practice", "Practice"]] as [Tab, string][]) : []),
+    ["mistakes", "Fix mistakes"],
     ["test", "Mixed test"],
   ];
 
@@ -103,11 +114,23 @@ export default function ReviseView({ subject }: { subject: Subject }) {
 
       {tab === "cards" && (
         <div className="mt-8 fade-up">
-          <select value={chSlug} onChange={(e) => setChSlug(e.target.value)}
-            className="mb-4 w-full rounded-xl border hairline bg-[var(--surface)] px-4 py-2.5 text-[0.95rem]">
-            {chapters.map((c) => <option key={c.slug} value={c.slug}>{c.num}. {c.title}</option>)}
-          </select>
-          <Flashcards key={chSlug} cards={cards} />
+          <div className="mb-4 inline-flex rounded-full border hairline p-0.5 text-[13px]">
+            {([["review", "Smart review"], ["browse", "Browse by chapter"]] as ["review" | "browse", string][]).map(([k, l]) => (
+              <button key={k} onClick={() => setCardMode(k)}
+                className={`rounded-full px-3.5 py-1.5 font-medium transition ${cardMode === k ? "bg-[var(--ink)] text-[var(--bg)]" : "faint"}`}>{l}</button>
+            ))}
+          </div>
+          {cardMode === "review" ? (
+            <ReviewCards subject={subject} />
+          ) : (
+            <>
+              <select value={chSlug} onChange={(e) => setChSlug(e.target.value)}
+                className="mb-4 w-full rounded-xl border hairline bg-[var(--surface)] px-4 py-2.5 text-[0.95rem]">
+                {chapters.map((c) => <option key={c.slug} value={c.slug}>{c.num}. {c.title}</option>)}
+              </select>
+              <Flashcards key={chSlug} cards={cards} />
+            </>
+          )}
         </div>
       )}
 
@@ -163,6 +186,8 @@ export default function ReviseView({ subject }: { subject: Subject }) {
         </div>
       )}
 
+      {tab === "mistakes" && <MistakeReview subject={subject} />}
+
       {tab === "test" && (
         <div className="mt-8 fade-up">
           <div className="mb-4 flex items-center justify-between">
@@ -171,7 +196,8 @@ export default function ReviseView({ subject }: { subject: Subject }) {
               New set
             </button>
           </div>
-          <Quiz key={seed} items={mixed} subject={subject.slug} slug="__mixed" />
+          <Quiz key={seed} items={mixed} subject={subject.slug} slug="__mixed"
+            onAnswer={(correct) => recordAttempt(correct)} />
         </div>
       )}
       </div>

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { LIVE_SUBJECTS } from "@/content";
 import ThemeToggle from "./ThemeToggle";
+import StreakChip from "./StreakChip";
 
 export default function SiteHeader() {
   const path = usePathname() ?? "/";
@@ -43,6 +44,7 @@ export default function SiteHeader() {
         )}
 
         <div className="ml-auto flex shrink-0 items-center gap-2">
+          <StreakChip />
           {current && (
             <Link href={`/${current.slug}/revise`}
               className="rounded-full border hairline px-3 py-1.5 text-[13px] font-medium transition hover:bg-[var(--surface-2)]">
