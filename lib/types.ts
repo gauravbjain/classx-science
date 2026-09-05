@@ -14,9 +14,60 @@ export type Block =
   | { t: "eq"; lines: string[]; caption?: string }
   | { t: "compare"; left: { title: string; items: string[] }; right: { title: string; items: string[] } };
 
-export type Quiz = { q: string; options: string[]; answer: number; why: string };
+/** How heavily the board tests this. Drives badges and the "most-asked" filter. */
+export type Importance = "high" | "medium" | "low";
+
+export type Quiz = {
+  q: string;
+  options: string[];
+  answer: number;
+  why: string;
+  importance?: Importance;
+  years?: string;   // e.g. "2023, 2020, 2018" — years this has appeared in the board paper
+};
 export type Flashcard = { q: string; a: string };
 export type FormulaRef = { name: string; expr: string; note?: string };
+
+/** A written (subjective) board-style question, 1-5 marks, with a model answer. */
+export type WrittenQ = {
+  q: string;
+  marks: number;
+  answer: string;                                     // model answer (HTML)
+  kind?: "short" | "long" | "numerical" | "diagram";  // defaults to short/long by marks
+  importance?: Importance;
+  years?: string;
+  hint?: string;
+};
+
+/**
+ * Assertion-Reason — the standard CBSE four-option format. The options are
+ * fixed and rendered by the component; `answer` indexes into them:
+ *   0  Both A and R true, and R is the correct explanation of A
+ *   1  Both A and R true, but R is not the correct explanation of A
+ *   2  A is true but R is false
+ *   3  A is false but R is true
+ */
+export type AssertionReasonQ = {
+  assertion: string;
+  reason: string;
+  answer: 0 | 1 | 2 | 3;
+  why: string;
+  importance?: Importance;
+  years?: string;
+};
+
+/** Case- / source-based question: a passage, source or data set with sub-parts. */
+export type CaseStudyQ = {
+  title?: string;
+  source: string;      // the passage / source / data (HTML)
+  caption?: string;
+  parts: { q: string; marks?: number; answer: string }[];
+  importance?: Importance;
+  years?: string;
+};
+
+/** A syllabus topic tagged with how heavily the board weights it. */
+export type KeyTopic = { name: string; importance: Importance; note?: string };
 
 /** A unit / theme within a subject. Each subject defines its own set. */
 export type UnitMeta = {
@@ -48,6 +99,12 @@ export type Chapter = {
   examFocus: string[];
   flashcards: Flashcard[];
   quiz: Quiz[];
+
+  // ---- exam practice (all optional; chapters are filled in progressively) ----
+  keyTopics?: KeyTopic[];            // syllabus topics rated by board weightage
+  written?: WrittenQ[];              // 1-5 mark subjective questions with model answers
+  assertionReason?: AssertionReasonQ[];
+  caseStudies?: CaseStudyQ[];
 };
 
 export type Subject = {

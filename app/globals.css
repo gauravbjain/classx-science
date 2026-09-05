@@ -103,4 +103,14 @@ input[type="range"]::-moz-range-thumb {
 
 @keyframes pulseRing { 0%{opacity:.9;r:4} 70%{opacity:0;r:14} 100%{opacity:0;r:14} }
 
+/* Injected HTML inside practice answers, model answers and case-study sources */
+.rich table { width: 100%; border-collapse: collapse; margin: 0.25rem 0; font-size: 0.88rem; }
+.rich th, .rich td { border: 1px solid var(--line); padding: 0.4rem 0.7rem; text-align: left; }
+.rich thead th { background: var(--surface-2); font-weight: 600; }
+.rich ul, .rich ol { margin: 0.35rem 0 0.35rem 1.1rem; }
+.rich ul { list-style: disc; }
+.rich ol { list-style: decimal; }
+.rich li { margin: 0.15rem 0; }
+.rich br { line-height: 1.7; }
+
 @media print { .no-print { display: none !important; } }

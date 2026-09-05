@@ -6,9 +6,10 @@ import { tint } from "@/lib/palette";
 import { BlockList, slugify } from "./Blocks";
 import Quiz from "./Quiz";
 import Flashcards from "./Flashcards";
+import Practice from "./Practice";
 import { markRead } from "@/lib/progress";
 
-type Tab = "learn" | "cards" | "quiz";
+type Tab = "learn" | "cards" | "quiz" | "practice";
 
 export default function ChapterView({
   ch, subjectSlug, subjectName, unit, prev, next,
@@ -23,6 +24,9 @@ export default function ChapterView({
   const [tab, setTab] = useState<Tab>("learn");
   const hue = unit?.hue ?? "var(--accent)";
   const toc = ch.blocks.filter((b) => b.t === "h").map((b) => (b as { text: string }).text);
+  const practiceCount =
+    (ch.written?.length ?? 0) + (ch.assertionReason?.length ?? 0) + (ch.caseStudies?.length ?? 0);
+  const hasPractice = practiceCount > 0 || (ch.keyTopics?.length ?? 0) > 0;
 
   useEffect(() => { markRead(subjectSlug, ch.slug); }, [subjectSlug, ch.slug]);
   useEffect(() => { window.scrollTo({ top: 0 }); }, [tab]);
@@ -52,7 +56,12 @@ export default function ChapterView({
       {/* tabs */}
       <div className="no-print sticky top-[96px] sm:top-[60px] z-30 mt-8 border-b hairline bg-[var(--bg)] backdrop-blur-xl">
         <div className="mx-auto flex max-w-3xl gap-1 overflow-x-auto px-5 py-2 no-scrollbar">
-          {([["learn", "Learn"], ["cards", `Flashcards (${ch.flashcards.length})`], ["quiz", `Quiz (${ch.quiz.length})`]] as [Tab, string][]).map(([k, l]) => (
+          {([
+            ["learn", "Learn"],
+            ["cards", `Flashcards (${ch.flashcards.length})`],
+            ["quiz", `Quiz (${ch.quiz.length})`],
+            ...(hasPractice ? [["practice", `Practice${practiceCount ? ` (${practiceCount})` : ""}`] as [Tab, string]] : []),
+          ] as [Tab, string][]).map(([k, l]) => (
             <button key={k} onClick={() => setTab(k)}
               className={`shrink-0 rounded-full px-3.5 py-1.5 text-[13px] font-medium transition ${
                 tab === k ? "bg-[var(--ink)] text-[var(--bg)]" : "faint hover:bg-[var(--surface-2)]"}`}>
@@ -140,6 +149,12 @@ export default function ChapterView({
       {tab === "quiz" && (
         <div className="mt-8 fade-up">
           <Quiz items={ch.quiz} subject={subjectSlug} slug={ch.slug} />
+        </div>
+      )}
+
+      {tab === "practice" && (
+        <div className="mt-8 fade-up">
+          <Practice ch={ch} />
         </div>
       )}
 

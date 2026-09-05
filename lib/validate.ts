@@ -37,6 +37,25 @@ export function validateSubjects(subjects: Subject[]) {
         }
         if (!q.why?.trim()) problems.push(`${at}: quiz Q${i + 1} has no explanation`);
       });
+
+      (c.written ?? []).forEach((w, i) => {
+        if (!w.q?.trim()) problems.push(`${at}: written Q${i + 1} has no question text`);
+        if (!w.answer?.trim()) problems.push(`${at}: written Q${i + 1} has no model answer`);
+        if (!(w.marks >= 1 && w.marks <= 5)) problems.push(`${at}: written Q${i + 1} marks ${w.marks} must be 1-5`);
+      });
+      (c.assertionReason ?? []).forEach((a, i) => {
+        if (!a.assertion?.trim() || !a.reason?.trim()) problems.push(`${at}: assertion-reason Q${i + 1} needs both an assertion and a reason`);
+        if (a.answer < 0 || a.answer > 3) problems.push(`${at}: assertion-reason Q${i + 1} answer ${a.answer} must be 0-3`);
+        if (!a.why?.trim()) problems.push(`${at}: assertion-reason Q${i + 1} has no explanation`);
+      });
+      (c.caseStudies ?? []).forEach((cs, i) => {
+        if (!cs.source?.trim()) problems.push(`${at}: case study ${i + 1} has no source passage`);
+        if (!cs.parts?.length) problems.push(`${at}: case study ${i + 1} has no sub-questions`);
+        (cs.parts ?? []).forEach((p, j) => {
+          if (!p.q?.trim()) problems.push(`${at}: case study ${i + 1} part ${j + 1} has no question`);
+          if (!p.answer?.trim()) problems.push(`${at}: case study ${i + 1} part ${j + 1} has no answer`);
+        });
+      });
     }
   }
 
