@@ -3,12 +3,13 @@
 An interactive learning site for **CBSE Class X**, session 2026-27. Built to be read on a phone or a
 laptop, with a simulation you can actually play with in every chapter.
 
-**Science**, **Mathematics** and **Social Science** are live. Adding a subject is a content
-change, not a refactor, and it moves no existing URL. See
-[docs/ADDING-A-SUBJECT.md](docs/ADDING-A-SUBJECT.md).
+**Science**, **Mathematics**, **Social Science** and **Artificial Intelligence** (the 417 skill
+subject) are live. Adding a subject is a content change, not a refactor, and it moves no existing URL.
+See [docs/ADDING-A-SUBJECT.md](docs/ADDING-A-SUBJECT.md).
 
-- 51 chapters, mapped line-by-line to the official CBSE Secondary Curriculum (2026-27) —
-  15 in Science, 14 in Mathematics, 22 in Social Science
+- 64 chapters, mapped to the official CBSE Curriculum (2026-27) — 15 in Science, 14 in Mathematics,
+  22 in Social Science, and 13 in Artificial Intelligence (417), a 6th/skill subject assessed as
+  50 marks theory + 50 marks practical
 - 65 interactive simulations — ray diagrams, circuits, Punnett squares, pH scale and food chains
   in Science; live graphs, a discriminant explorer, a draggable coordinate plane, circle tangents
   and a probability simulator in Maths; scrubbable timelines, a latitude-and-longitude India
