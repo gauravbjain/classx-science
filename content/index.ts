@@ -2,6 +2,7 @@ import type { Subject } from "@/lib/types";
 import { SCIENCE } from "./science";
 import { MATHEMATICS } from "./mathematics";
 import { SOCIAL_SCIENCE } from "./social-science";
+import { ARTIFICIAL_INTELLIGENCE } from "./artificial-intelligence";
 import { validateSubjects } from "@/lib/validate";
 
 /**
@@ -16,6 +17,7 @@ export const SUBJECTS: Subject[] = [
   SCIENCE,
   MATHEMATICS,
   SOCIAL_SCIENCE,
+  ARTIFICIAL_INTELLIGENCE,
 ];
 
 validateSubjects(SUBJECTS);

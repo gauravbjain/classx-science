@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import type { Subject, Quiz, AssertionReasonQ, WrittenQ, CaseStudyQ } from "@/lib/types";
 import { recordAnswer } from "@/lib/progress";
@@ -92,6 +93,24 @@ export default function MockPaper({ subject }: { subject: Subject }) {
     : 0;
   const attempted = Object.keys(picks).length;
   const reveal = phase === "done";
+
+  // Mock papers are calibrated to the 80-mark board subjects. Skill subjects
+  // (e.g. AI, 50 marks) have a different pattern, so we don't fake one here.
+  if (subject.paperMarks !== 80) {
+    return (
+      <div className="mx-auto max-w-2xl px-5 py-16 text-center">
+        <div className="text-[2rem]">📝</div>
+        <h1 className="mt-3 text-[1.6rem] font-semibold tracking-tight">No mock paper for {subject.name} yet</h1>
+        <p className="mx-auto mt-3 max-w-md text-[0.95rem] muted">
+          {subject.name} follows a different exam pattern from the 80-mark subjects, so a mock paper isn’t set up for it.
+          Use the chapter quizzes and the Practice tab to prepare.
+        </p>
+        <Link href={`/${subject.slug}/revise`} className="mt-5 inline-block rounded-full bg-[var(--accent)] px-6 py-2.5 text-[13px] font-semibold text-white">
+          Go to revise →
+        </Link>
+      </div>
+    );
+  }
 
   // ---- intro ----
   if (phase === "intro") {

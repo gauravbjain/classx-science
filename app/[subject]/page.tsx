@@ -40,10 +40,12 @@ export default async function SubjectHome({ params }: { params: Promise<{ subjec
           <span className="rounded-full border hairline px-3 py-1.5">{totalQ} practice questions</span>
         </div>
         <div className="mt-5 flex flex-wrap gap-2.5">
-          <Link href={`/${subject.slug}/mock`}
-            className="rounded-full px-4 py-2 text-[13px] font-semibold text-white" style={{ background: subject.accent }}>
-            📝 Sit a mock board paper
-          </Link>
+          {subject.paperMarks === 80 && (
+            <Link href={`/${subject.slug}/mock`}
+              className="rounded-full px-4 py-2 text-[13px] font-semibold text-white" style={{ background: subject.accent }}>
+              📝 Sit a mock board paper
+            </Link>
+          )}
           <Link href={`/${subject.slug}/revise`}
             className="rounded-full border hairline px-4 py-2 text-[13px] font-medium transition hover:bg-[var(--surface-2)]">
             Revise · formulas · fix mistakes
